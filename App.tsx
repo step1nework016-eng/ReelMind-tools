@@ -242,7 +242,7 @@ const App: React.FC = () => {
                       onChange={(e) => setPrompt(e.target.value)}
                       placeholder={
                         mode === 'generate' 
-                        ? "請輸入描述以生成影像... 例如：『具有賽博龐克美感的 4x4 ReelMind Logo』" 
+                        ? "請輸入描述... 若需生成文字，請用括號包覆，例如：『YS娛樂城』" 
                         : "請輸入編輯指令... 例如：『加入復古濾鏡』、『將背景改為下雪場景』"
                       }
                       className="w-full h-32 bg-black/50 border border-gray-700 rounded p-3 text-sm focus:border-cyber-primary focus:ring-1 focus:ring-cyber-primary outline-none transition-all font-mono resize-none text-gray-300 placeholder-gray-600"
@@ -272,7 +272,7 @@ const App: React.FC = () => {
             <div className="bg-cyber-gray/30 border-l-2 border-cyber-accent p-4 rounded-r text-sm text-gray-400 font-mono">
               <p className="flex items-center gap-2 mb-1 text-cyber-accent uppercase font-bold text-xs"><Grid size={12}/> 創作建議</p>
               {mode === 'generate' 
-                ? "您可以嘗試輸入『具有未來科技感的 3D Logo』來體驗品牌設計能力。" 
+                ? "重要：如需精確文字，請使用中文括號，例如：『ReelMind』。AI 會自動增強文字渲染效果。" 
                 : "建議上傳清晰的圖片，並給予具體明確的指令，例如『將天空換成極光』。"}
             </div>
           </div>
