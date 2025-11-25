@@ -1,0 +1,4 @@
+/* 
+  Styles are currently handled via the Tailwind CSS CDN in index.html for immediate preview compatibility.
+  For a production build without CDN, restore the @tailwind directives and ensure PostCSS is configured.
+*/

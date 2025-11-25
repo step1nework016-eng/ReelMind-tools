@@ -1,0 +1,5 @@
+{
+  "name": "ReelMind AI Studio",
+  "description": "由 Gemini 2.5 Flash Image 驅動的賽博龐克風格圖像生成與編輯套件。創建 Logo、編輯照片並探索視覺概念。",
+  "requestFramePermissions": []
+}
