@@ -1,7 +1,5 @@
 import { GoogleGenAI, HarmCategory, HarmBlockThreshold } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const MODEL_NAME = 'gemini-2.5-flash-image';
 
 // Safety settings to prevent over-blocking legitimate content
@@ -29,6 +27,9 @@ export const generateImage = async (
   prompt: string, 
   aspectRatio: string = "1:1"
 ): Promise<string> => {
+  // Initialize AI client inside the function to avoid startup crashes
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   try {
     // 1. Detect text inside Chinese brackets 「」 or 『』
     const textMatch = prompt.match(/[「『](.*?)[」』]/);
@@ -115,6 +116,9 @@ export const editImage = async (
   mimeType: string, 
   prompt: string
 ): Promise<string> => {
+  // Initialize AI client inside the function to avoid startup crashes
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   try {
     const base64Data = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
 
