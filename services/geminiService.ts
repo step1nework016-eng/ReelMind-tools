@@ -21,13 +21,17 @@ export const generateImage = async (
       }
     });
 
-    // Parse response for image
+    // Parse response for image with strict null checks
     const candidates = response.candidates;
     if (candidates && candidates.length > 0) {
-      for (const part of candidates[0].content.parts) {
-        if (part.inlineData) {
-          const base64EncodeString = part.inlineData.data;
-          return `data:${part.inlineData.mimeType};base64,${base64EncodeString}`;
+      const candidate = candidates[0];
+      if (candidate.content && candidate.content.parts) {
+        for (const part of candidate.content.parts) {
+          if (part.inlineData && part.inlineData.data) {
+            const base64EncodeString = part.inlineData.data;
+            const mimeType = part.inlineData.mimeType || 'image/png';
+            return `data:${mimeType};base64,${base64EncodeString}`;
+          }
         }
       }
     }
@@ -46,7 +50,7 @@ export const editImage = async (
 ): Promise<string> => {
   try {
     // Remove header from base64 string if present for the API call
-    const cleanBase64 = imageBase64.split(',')[1];
+    const base64Data = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
 
     const response = await ai.models.generateContent({
       model: MODEL_NAME,
@@ -54,7 +58,7 @@ export const editImage = async (
         parts: [
           {
             inlineData: {
-              data: cleanBase64,
+              data: base64Data,
               mimeType: mimeType
             }
           },
@@ -65,10 +69,14 @@ export const editImage = async (
 
     const candidates = response.candidates;
     if (candidates && candidates.length > 0) {
-      for (const part of candidates[0].content.parts) {
-        if (part.inlineData) {
-          const base64EncodeString = part.inlineData.data;
-          return `data:${part.inlineData.mimeType};base64,${base64EncodeString}`;
+      const candidate = candidates[0];
+      if (candidate.content && candidate.content.parts) {
+        for (const part of candidate.content.parts) {
+          if (part.inlineData && part.inlineData.data) {
+            const base64EncodeString = part.inlineData.data;
+            const resultMimeType = part.inlineData.mimeType || 'image/png';
+            return `data:${resultMimeType};base64,${base64EncodeString}`;
+          }
         }
       }
     }
